@@ -1,12 +1,13 @@
 name: Upload and build nightly wheels
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
 jobs:
   cron:
     # Do not attempt to upload nightly through forks
-    if: github.repository_owner == 'networkx'
+    # if: github.repository_owner == 'networkx'
 
     runs-on: ubuntu-latest
     steps:
@@ -26,8 +27,8 @@ jobs:
         run: python -m tarfile --list dist/networkx-*.tar.gz
       - name: List contents of wheel
         run: python -m zipfile --list dist/networkx-*.whl
-      - name: Upload nighlty wheel
-        uses: scientific-python/upload-nightly-action@main
-        with:
-          anaconda_nightly_upload_token: ${{ secrets.ANACONDA_NIGHTLY }}
-          artifacts_path: dist/
+      # - name: Upload nighlty wheel
+      #   uses: scientific-python/upload-nightly-action@main
+      #   with:
+      #     anaconda_nightly_upload_token: ${{ secrets.ANACONDA_NIGHTLY }}
+      #     artifacts_path: dist/
